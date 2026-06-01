@@ -19,7 +19,7 @@
     <description>AWS Cognito implementation of the Firefly IDP Adapter</description>
 
     <properties>
-        <fireflyframework-idp.version>26.05.07</fireflyframework-idp.version>
+        <fireflyframework-idp.version>26.05.08</fireflyframework-idp.version>
         <aws.sdk.version>2.41.26</aws.sdk.version>
     </properties>
 
