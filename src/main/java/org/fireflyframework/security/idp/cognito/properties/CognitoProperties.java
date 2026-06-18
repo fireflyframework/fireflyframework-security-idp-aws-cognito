@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.fireflyframework.idp.cognito.properties;
+package org.fireflyframework.security.idp.cognito.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

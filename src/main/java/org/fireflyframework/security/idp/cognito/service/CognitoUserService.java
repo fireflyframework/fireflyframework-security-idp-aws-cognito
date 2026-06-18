@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package org.fireflyframework.idp.cognito.service;
+package org.fireflyframework.security.idp.cognito.service;
 
-import org.fireflyframework.idp.cognito.client.CognitoClientFactory;
-import org.fireflyframework.idp.cognito.properties.CognitoProperties;
-import org.fireflyframework.idp.cognito.util.CognitoSecretHashCalculator;
-import org.fireflyframework.idp.dtos.*;
+import org.fireflyframework.security.idp.cognito.client.CognitoClientFactory;
+import org.fireflyframework.security.idp.cognito.properties.CognitoProperties;
+import org.fireflyframework.security.idp.cognito.util.CognitoSecretHashCalculator;
+import org.fireflyframework.security.idp.dtos.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

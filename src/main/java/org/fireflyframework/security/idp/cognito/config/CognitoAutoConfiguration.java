@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package org.fireflyframework.idp.cognito.config;
+package org.fireflyframework.security.idp.cognito.config;
 
-import org.fireflyframework.idp.adapter.IdpAdapter;
-import org.fireflyframework.idp.cognito.adapter.CognitoIdpAdapter;
-import org.fireflyframework.idp.cognito.client.CognitoClientFactory;
-import org.fireflyframework.idp.cognito.properties.CognitoProperties;
-import org.fireflyframework.idp.cognito.service.CognitoAdminService;
-import org.fireflyframework.idp.cognito.service.CognitoUserService;
+import org.fireflyframework.security.idp.adapter.IdpAdapter;
+import org.fireflyframework.security.idp.cognito.adapter.CognitoIdpAdapter;
+import org.fireflyframework.security.idp.cognito.client.CognitoClientFactory;
+import org.fireflyframework.security.idp.cognito.properties.CognitoProperties;
+import org.fireflyframework.security.idp.cognito.service.CognitoAdminService;
+import org.fireflyframework.security.idp.cognito.service.CognitoUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

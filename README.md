@@ -1,6 +1,6 @@
 # Firefly Framework - IDP AWS Cognito
 
-[![CI](https://github.com/fireflyframework/fireflyframework-idp-aws-cognito/actions/workflows/ci.yml/badge.svg)](https://github.com/fireflyframework/fireflyframework-idp-aws-cognito/actions/workflows/ci.yml)
+[![CI](https://github.com/fireflyframework/fireflyframework-security-idp-aws-cognito/actions/workflows/ci.yml/badge.svg)](https://github.com/fireflyframework/fireflyframework-security-idp-aws-cognito/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Java](https://img.shields.io/badge/Java-21%2B-orange.svg)](https://openjdk.org)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-green.svg)](https://spring.io/projects/spring-boot)
@@ -24,7 +24,7 @@
 
 ## Overview
 
-`fireflyframework-idp-aws-cognito` is a **pluggable provider adapter** for the Firefly Framework Identity Provider (IDP) abstraction. It implements the framework's `IdpAdapter` SPI — defined in the core [`fireflyframework-idp`](https://github.com/fireflyframework/fireflyframework-idp) module — on top of [Amazon Cognito User Pools](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html), using the AWS SDK for Java v2.
+`fireflyframework-security-idp-aws-cognito` is a **pluggable provider adapter** for the Firefly Framework Identity Provider (IDP) abstraction. It implements the framework's `IdpAdapter` SPI — defined in the core [`fireflyframework-security-idp`](https://github.com/fireflyframework/fireflyframework-security-idp) module — on top of [Amazon Cognito User Pools](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html), using the AWS SDK for Java v2.
 
 Application code depends only on the provider-neutral `IdpAdapter` interface and the framework's request/response DTOs. By adding this module to the classpath and selecting it with `firefly.idp.provider=cognito`, all authentication and identity operations are transparently routed to AWS Cognito — with no Cognito-specific code in your services. Swapping to a different backend (Keycloak, Azure AD, an internal database) is a configuration change, not a code change.
 
@@ -42,11 +42,11 @@ This adapter is one of several interchangeable implementations of the same `IdpA
 
 | Module | Backend | Selector (`firefly.idp.provider`) |
 | --- | --- | --- |
-| [`fireflyframework-idp`](https://github.com/fireflyframework/fireflyframework-idp) | Core SPI, DTOs, auto-config | — |
-| **`fireflyframework-idp-aws-cognito`** | **AWS Cognito User Pools** | **`cognito`** |
-| [`fireflyframework-idp-keycloak`](https://github.com/fireflyframework/fireflyframework-idp-keycloak) | Keycloak | `keycloak` |
-| [`fireflyframework-idp-azure-ad`](https://github.com/fireflyframework/fireflyframework-idp-azure-ad) | Microsoft Entra ID (Azure AD) | `azure-ad` |
-| [`fireflyframework-idp-internal-db`](https://github.com/fireflyframework/fireflyframework-idp-internal-db) | Internal database | `internal-db` |
+| [`fireflyframework-security-idp`](https://github.com/fireflyframework/fireflyframework-security-idp) | Core SPI, DTOs, auto-config | — |
+| **`fireflyframework-security-idp-aws-cognito`** | **AWS Cognito User Pools** | **`cognito`** |
+| [`fireflyframework-security-idp-keycloak`](https://github.com/fireflyframework/fireflyframework-security-idp-keycloak) | Keycloak | `keycloak` |
+| [`fireflyframework-security-idp-azure-ad`](https://github.com/fireflyframework/fireflyframework-security-idp-azure-ad) | Microsoft Entra ID (Azure AD) | `azure-ad` |
+| [`fireflyframework-security-idp-internal-db`](https://github.com/fireflyframework/fireflyframework-security-idp-internal-db) | Internal database | `internal-db` |
 
 ## Features
 
@@ -67,7 +67,7 @@ This adapter is one of several interchangeable implementations of the same `IdpA
 - Java 21+ (Java 25 recommended)
 - Spring Boot 3.x
 - Maven 3.9+
-- The core [`fireflyframework-idp`](https://github.com/fireflyframework/fireflyframework-idp) module on the classpath
+- The core [`fireflyframework-security-idp`](https://github.com/fireflyframework/fireflyframework-security-idp) module on the classpath
 - An AWS account with a configured **Cognito User Pool** and **app client** (and valid AWS credentials resolvable via the default provider chain, or via LocalStack for testing)
 
 ## Installation
@@ -79,13 +79,13 @@ Add the adapter alongside the IDP core. Versions are managed by the Firefly Fram
     <!-- Core IDP SPI, DTOs and auto-configuration -->
     <dependency>
         <groupId>org.fireflyframework</groupId>
-        <artifactId>fireflyframework-idp</artifactId>
+        <artifactId>fireflyframework-security-idp</artifactId>
     </dependency>
 
     <!-- AWS Cognito provider adapter -->
     <dependency>
         <groupId>org.fireflyframework</groupId>
-        <artifactId>fireflyframework-idp-aws-cognito</artifactId>
+        <artifactId>fireflyframework-security-idp-aws-cognito</artifactId>
     </dependency>
 </dependencies>
 ```
@@ -110,9 +110,9 @@ firefly:
 **2. Inject the provider-neutral `IdpAdapter`** — auto-configuration supplies the Cognito-backed bean:
 
 ```java
-import org.fireflyframework.idp.adapter.IdpAdapter;
-import org.fireflyframework.idp.dtos.LoginRequest;
-import org.fireflyframework.idp.dtos.TokenResponse;
+import org.fireflyframework.security.idp.adapter.IdpAdapter;
+import org.fireflyframework.security.idp.dtos.LoginRequest;
+import org.fireflyframework.security.idp.dtos.TokenResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -188,7 +188,7 @@ Each adapter call delegates to the matching service, which obtains the lazily-ca
 ## Documentation
 
 - Firefly Framework module catalog and docs hub: [github.com/fireflyframework](https://github.com/fireflyframework)
-- Core IDP SPI and DTOs: [`fireflyframework-idp`](https://github.com/fireflyframework/fireflyframework-idp)
+- Core IDP SPI and DTOs: [`fireflyframework-security-idp`](https://github.com/fireflyframework/fireflyframework-security-idp)
 - AWS Cognito reference: [Amazon Cognito Developer Guide](https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html)
 
 ## Contributing

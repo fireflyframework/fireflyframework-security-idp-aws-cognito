@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package org.fireflyframework.idp.cognito.adapter;
+package org.fireflyframework.security.idp.cognito.adapter;
 
-import org.fireflyframework.idp.cognito.client.CognitoClientFactory;
-import org.fireflyframework.idp.cognito.properties.CognitoProperties;
-import org.fireflyframework.idp.cognito.service.CognitoAdminService;
-import org.fireflyframework.idp.cognito.service.CognitoUserService;
-import org.fireflyframework.idp.dtos.*;
+import org.fireflyframework.security.idp.cognito.client.CognitoClientFactory;
+import org.fireflyframework.security.idp.cognito.properties.CognitoProperties;
+import org.fireflyframework.security.idp.cognito.service.CognitoAdminService;
+import org.fireflyframework.security.idp.cognito.service.CognitoUserService;
+import org.fireflyframework.security.idp.dtos.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.http.HttpStatus;
@@ -334,7 +334,7 @@ class CognitoIdpAdapterLocalStackIT {
     @Order(8)
     @DisplayName("Should change user password")
     void testChangePassword() {
-        org.fireflyframework.idp.dtos.ChangePasswordRequest request = org.fireflyframework.idp.dtos.ChangePasswordRequest.builder()
+        org.fireflyframework.security.idp.dtos.ChangePasswordRequest request = org.fireflyframework.security.idp.dtos.ChangePasswordRequest.builder()
                 .userId(TEST_USERNAME)
                 .oldPassword(TEST_PASSWORD)
                 .newPassword("NewTestPass123!")
