@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.fireflyframework.idp.cognito.util;
+package org.fireflyframework.security.idp.cognito.util;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;

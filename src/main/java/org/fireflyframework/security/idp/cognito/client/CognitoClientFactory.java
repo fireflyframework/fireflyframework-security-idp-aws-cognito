@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.fireflyframework.idp.cognito.client;
+package org.fireflyframework.security.idp.cognito.client;
 
-import org.fireflyframework.idp.cognito.properties.CognitoProperties;
+import org.fireflyframework.security.idp.cognito.properties.CognitoProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;

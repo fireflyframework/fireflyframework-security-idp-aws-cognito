@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.fireflyframework.idp.cognito.properties;
+package org.fireflyframework.security.idp.cognito.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -41,7 +41,7 @@ import jakarta.validation.constraints.NotBlank;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "firefly.idp.cognito")
+@ConfigurationProperties(prefix = "firefly.security.idp.cognito")
 public class CognitoProperties {
 
     /**
