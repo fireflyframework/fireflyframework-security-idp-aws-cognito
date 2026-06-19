@@ -26,7 +26,7 @@
 
 `fireflyframework-security-idp-aws-cognito` is a **pluggable provider adapter** for the Firefly Framework Identity Provider (IDP) abstraction. It implements the framework's `IdpAdapter` SPI — defined in the core [`fireflyframework-security-idp`](https://github.com/fireflyframework/fireflyframework-security-idp) module — on top of [Amazon Cognito User Pools](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html), using the AWS SDK for Java v2.
 
-Application code depends only on the provider-neutral `IdpAdapter` interface and the framework's request/response DTOs. By adding this module to the classpath and selecting it with `firefly.idp.provider=cognito`, all authentication and identity operations are transparently routed to AWS Cognito — with no Cognito-specific code in your services. Swapping to a different backend (Keycloak, Azure AD, an internal database) is a configuration change, not a code change.
+Application code depends only on the provider-neutral `IdpAdapter` interface and the framework's request/response DTOs. By adding this module to the classpath and selecting it with `firefly.security.idp.provider=cognito`, all authentication and identity operations are transparently routed to AWS Cognito — with no Cognito-specific code in your services. Swapping to a different backend (Keycloak, Azure AD, an internal database) is a configuration change, not a code change.
 
 The adapter is **fully reactive** (Project Reactor `Mono`): the blocking AWS SDK v2 synchronous client is wrapped in `Mono.fromCallable(...)` so it composes cleanly into Spring WebFlux pipelines. The implementation is split into focused collaborators:
 
@@ -40,7 +40,7 @@ The adapter is **fully reactive** (Project Reactor `Mono`): the blocking AWS SDK
 
 This adapter is one of several interchangeable implementations of the same `IdpAdapter` SPI:
 
-| Module | Backend | Selector (`firefly.idp.provider`) |
+| Module | Backend | Selector (`firefly.security.idp.provider`) |
 | --- | --- | --- |
 | [`fireflyframework-security-idp`](https://github.com/fireflyframework/fireflyframework-security-idp) | Core SPI, DTOs, auto-config | — |
 | **`fireflyframework-security-idp-aws-cognito`** | **AWS Cognito User Pools** | **`cognito`** |
@@ -59,7 +59,7 @@ This adapter is one of several interchangeable implementations of the same `IdpA
 - **Automatic `SECRET_HASH` handling** — transparently computed for app clients configured with a client secret (`CognitoSecretHashCalculator`).
 - **Reactive, non-blocking API** — every operation returns a Project Reactor `Mono`, composing into Spring WebFlux pipelines.
 - **Managed client lifecycle** — `CognitoClientFactory` lazily creates a single, double-checked-locking-guarded `CognitoIdentityProviderClient`, applies API call/attempt timeouts, and closes it on `@PreDestroy`.
-- **Zero-code activation** — Spring Boot auto-configuration (`CognitoAutoConfiguration`) wires every bean automatically, gated on `firefly.idp.provider=cognito` and the Cognito SDK being on the classpath.
+- **Zero-code activation** — Spring Boot auto-configuration (`CognitoAutoConfiguration`) wires every bean automatically, gated on `firefly.security.idp.provider=cognito` and the Cognito SDK being on the classpath.
 - **LocalStack-friendly** — optional endpoint and credentials overrides enable fully offline integration tests against [LocalStack](https://localstack.cloud/) (see `CognitoIdpAdapterLocalStackIT`).
 
 ## Requirements
@@ -135,11 +135,11 @@ public class AuthService {
 }
 ```
 
-Because `AuthService` depends only on `IdpAdapter`, switching to another backend later means swapping the adapter dependency and changing `firefly.idp.provider` — the service code is unchanged.
+Because `AuthService` depends only on `IdpAdapter`, switching to another backend later means swapping the adapter dependency and changing `firefly.security.idp.provider` — the service code is unchanged.
 
 ## Configuration
 
-All properties are bound from `CognitoProperties` under the `firefly.idp.cognito` prefix. Activation additionally requires the top-level selector `firefly.idp.provider=cognito`.
+All properties are bound from `CognitoProperties` under the `firefly.security.idp.cognito` prefix. Activation additionally requires the top-level selector `firefly.security.idp.provider=cognito`.
 
 ```yaml
 firefly:
@@ -158,15 +158,15 @@ firefly:
 
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
-| `firefly.idp.provider` | Yes | — | Must be `cognito` to activate this adapter. |
-| `firefly.idp.cognito.region` | Yes (non-blank) | `us-east-1` | AWS region where the Cognito User Pool lives. |
-| `firefly.idp.cognito.user-pool-id` | Yes | — | Cognito User Pool ID. |
-| `firefly.idp.cognito.client-id` | Yes | — | Cognito app client ID. |
-| `firefly.idp.cognito.client-secret` | No | — | App client secret; when set, the adapter computes and sends `SECRET_HASH`. |
-| `firefly.idp.cognito.domain` | No | — | Cognito hosted-UI domain. |
-| `firefly.idp.cognito.endpoint-override` | No | — | Custom Cognito endpoint URI (used to point at LocalStack in tests). |
-| `firefly.idp.cognito.connection-timeout` | No | `30000` | Per-attempt API call timeout, in milliseconds. |
-| `firefly.idp.cognito.request-timeout` | No | `60000` | Overall API call timeout (across retries), in milliseconds. |
+| `firefly.security.idp.provider` | Yes | — | Must be `cognito` to activate this adapter. |
+| `firefly.security.idp.cognito.region` | Yes (non-blank) | `us-east-1` | AWS region where the Cognito User Pool lives. |
+| `firefly.security.idp.cognito.user-pool-id` | Yes | — | Cognito User Pool ID. |
+| `firefly.security.idp.cognito.client-id` | Yes | — | Cognito app client ID. |
+| `firefly.security.idp.cognito.client-secret` | No | — | App client secret; when set, the adapter computes and sends `SECRET_HASH`. |
+| `firefly.security.idp.cognito.domain` | No | — | Cognito hosted-UI domain. |
+| `firefly.security.idp.cognito.endpoint-override` | No | — | Custom Cognito endpoint URI (used to point at LocalStack in tests). |
+| `firefly.security.idp.cognito.connection-timeout` | No | `30000` | Per-attempt API call timeout, in milliseconds. |
+| `firefly.security.idp.cognito.request-timeout` | No | `60000` | Overall API call timeout (across retries), in milliseconds. |
 
 `region`, `user-pool-id` and `client-id` are validated as non-blank (`@Validated` + `@NotBlank`); the application fails fast at startup if any are missing.
 
@@ -174,7 +174,7 @@ firefly:
 
 `CognitoAutoConfiguration` is registered as a Spring Boot `@AutoConfiguration` and is loaded automatically via `META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`. It activates only when:
 
-- `firefly.idp.provider=cognito` (`@ConditionalOnProperty`), and
+- `firefly.security.idp.provider=cognito` (`@ConditionalOnProperty`), and
 - `software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient` is on the classpath (`@ConditionalOnClass`).
 
 When active, it contributes (each `@ConditionalOnMissingBean`, so you can override any of them):

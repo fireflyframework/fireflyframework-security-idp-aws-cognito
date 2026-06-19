@@ -41,7 +41,7 @@ import jakarta.validation.constraints.NotBlank;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "firefly.idp.cognito")
+@ConfigurationProperties(prefix = "firefly.security.idp.cognito")
 public class CognitoProperties {
 
     /**

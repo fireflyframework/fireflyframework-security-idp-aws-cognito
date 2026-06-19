@@ -42,7 +42,7 @@ import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityPr
  * </ul>
  */
 @AutoConfiguration
-@ConditionalOnProperty(name = "firefly.idp.provider", havingValue = "cognito")
+@ConditionalOnProperty(name = "firefly.security.idp.provider", havingValue = "cognito")
 @ConditionalOnClass(CognitoIdentityProviderClient.class)
 @EnableConfigurationProperties(CognitoProperties.class)
 @Slf4j
